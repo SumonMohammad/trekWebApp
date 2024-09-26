@@ -14,7 +14,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Set up Docker
+      # Install Docker (explicit installation and startup)
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo docker --version
+
+      # Verify Docker is running
+      - name: Verify Docker status
+        run: sudo systemctl status docker
+
+      # Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -22,6 +34,6 @@ jobs:
       - name: Build Docker image
         run: docker build -t trekwebapp .
 
-      # Run the tests in Docker
+      # Run Playwright tests in Docker
       - name: Run Playwright tests in Docker
-        run: docker run -it trekwebapp
+        run: docker run trekwebapp
