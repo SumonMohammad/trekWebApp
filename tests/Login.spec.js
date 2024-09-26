@@ -1,12 +1,16 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
-test('login test', async ({ page }) => {
-  await page.goto('https://your-web-app-url.com');
-  await page.fill('#username', 'your-username');
-  await page.fill('#password', 'your-password');
-  await page.click('button[type="submit"]');
-  
-  // Validate that the user has successfully logged in
-  await expect(page).toHaveURL('https://your-web-app-url.com/dashboard');
-  await expect(page.locator('.welcome-message')).toContainText('Welcome');
+test('test', async ({ page }) => {
+  await page.goto('https://app-dev.techetronventures.com/login');
+  await page.getByRole('button', { name: 'Log in' }).click();
+  await page.getByPlaceholder('1XXXXXXXX').click();
+  await page.getByPlaceholder('1XXXXXXXX').fill('1999999999');
+  await page.getByPlaceholder('password').click();
+  await page.getByPlaceholder('password').fill('0000');
+  await page.getByRole('button', { name: 'Get Code' }).click();
+  await page.getByRole('spinbutton').first().click();
+  await page.getByRole('spinbutton').nth(1).fill('0');
+  await page.getByRole('spinbutton').nth(2).fill('0');
+  await page.getByRole('spinbutton').nth(3).fill('0');
+ 
 });
